@@ -38,6 +38,27 @@ export function createboard(boardSize, numberOfMines) {
     return board
 }
 
+export function checkWin(board) {
+
+    return board.every(row => {
+        return row.every(tile => {
+            return tile.status === TILE_STATUSES.NUMBER || (tile.mine && (tile.status === TILE_STATUSES.HIDDEN || tile.status === TILE_STATUSES.MARKED))
+        })
+    })
+}
+
+
+
+export function checkLose(board) {
+    return board.some(row => {
+        return row.some(tile => {
+            return tile.status === TILE_STATUSES.MINE
+        })
+    })
+}
+
+
+
 function getMinePositions(boardSize, numberOfMines) {
     const positions = []
 
@@ -94,7 +115,6 @@ export function revealTile(board, tile) {
 function positionMatch(a, b) {
     return a.x === b.x && a.y === b.y
 }
-
 function randomNumber(size) {
     return Math.floor(Math.random() * size)
 }
